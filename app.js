@@ -21,13 +21,26 @@ async function loginToCelia() {
 
   // Perform actions on the dashboard after logging in
   // Example: Access dashboard elements, perform tasks, etc.
-  const linkSelector = 'a[href="/mine"][onclick^="location.href="]';
+  await page.waitForSelector('a[href="/mine"]');
 
-  // Click on the link
-  await page.click(linkSelector);
+  // Click the link
+  await page.click('a[href="/mine"]');
+  await page.waitForTimeout(5000); // 2 seconds
+
+  await page.waitForSelector("button#mine-button.circular-button");
+
+  // Click the button
+  await page.click("button#mine-button.circular-button");
+  await page.waitForTimeout(5000);
+
+  // Click the button
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(2000);
+  await page.keyboard.press("Enter");
+
   console.log("mining successfully waiting for tomorrow...");
   // Close the browser
-  await browser.close();
+  //   await browser.close();
 
   // Schedule the login process to run every 24 hours
 }
