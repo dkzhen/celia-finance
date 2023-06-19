@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node app"
+    "register": "node register",
+    "login": "node app"
   },
   "keywords": [],
   "author": "",

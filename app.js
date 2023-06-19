@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 async function loginToCelia() {
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox"],
+    headless: false,
+    // args: ["--no-sandbox"],
   }); // Launch the browser
   const page = await browser.newPage(); // Create a new page
 
@@ -43,7 +43,7 @@ async function loginToCelia() {
 
   console.log("mining successfully waiting for tomorrow...");
   // Close the browser
-  //   await browser.close();
+  await browser.close();
 
   // Schedule the login process to run every 24 hours
 }
