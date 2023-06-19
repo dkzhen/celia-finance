@@ -2,7 +2,10 @@ const puppeteer = require("puppeteer");
 const dotenv = require("dotenv");
 dotenv.config();
 async function loginToCelia() {
-  const browser = await puppeteer.launch({ headless: false }); // Launch the browser
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox"],
+  }); // Launch the browser
   const page = await browser.newPage(); // Create a new page
 
   // Navigate to the Celia Finance login page
