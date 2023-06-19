@@ -1,19 +1,32 @@
 const puppeteer = require("puppeteer");
 const dotenv = require("dotenv");
+const readline = require("readline");
 dotenv.config();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 async function loginToCelia() {
   const browser = await puppeteer.launch({
-    headless: false,
-    // args: ["--no-sandbox"],
+    headless: true,
+    args: ["--no-sandbox"],
   }); // Launch the browser
   const page = await browser.newPage(); // Create a new page
+  let email = null;
 
+  // Prompt for the email
+  while (!email) {
+    email = await askQuestion("Enter your email:");
+
+    // Wait for a short duration to allow time for input
+    await page.waitForTimeout(1000);
+  }
   // Navigate to the Celia Finance login page
   await page.goto("https://celia.finance/login");
   await page.waitForSelector('input[name="email"]');
 
   // Fill in the login form
-  await page.type('input[name="email"]', process.env.EMAIL); // Replace with your email address
+  await page.type('input[name="email"]', email); // Replace with your email address
   await page.type('input[name="current-password"]', process.env.PASSWORD); // Replace with your password
 
   // Click the login button
@@ -41,14 +54,25 @@ async function loginToCelia() {
   await page.waitForTimeout(2000);
   await page.keyboard.press("Enter");
 
-  console.log("mining successfully waiting for tomorrow...");
+  console.log("mining successfully login again tomorrow...");
   // Close the browser
   await browser.close();
 
   // Schedule the login process to run every 24 hours
 }
-const interval = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-setInterval(loginToCelia, interval);
+// const interval = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+// setInterval(loginToCelia, interval);
 
 // Call the login function
-loginToCelia();
+function askQuestion(question) {
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      resolve(answer.trim());
+    });
+  });
+}
+
+// Call the login function
+loginToCelia().then(() => {
+  rl.close();
+});
