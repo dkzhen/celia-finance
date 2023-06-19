@@ -1,3 +1,4 @@
+const REFFERAL = "WT1N48CLT"
 const puppeteer = require("puppeteer");
 const dotenv = require("dotenv");
 const readline = require("readline");
@@ -30,7 +31,7 @@ async function loginToCelia() {
   await page.waitForSelector('input[name="url"]');
   await page.type(
     'input[name="url"]',
-    "https://celia.finance/register?referral_code=WT1N48CLT"
+    `https://celia.finance/register?referral_code=${REFFERAL}`
   );
   await page.click("button#requestSubmit");
   await page.waitForTimeout(5000);
