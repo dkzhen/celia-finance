@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img height="auto" width="auto" src="https://celia.b-cdn.net/assets/images/just-logo-light.png">
+  <img height="auto" width="auto" src="https://celia.b-cdn.net/assets/images/just-logo-dark.png">
 </p>
 
 ## official links
