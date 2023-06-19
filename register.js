@@ -11,8 +11,8 @@ async function loginToCelia() {
   puppeteer.use(StealthPlugin());
 
   const browser = await puppeteer.launch({
-    headless: false,
-    // args: ["--no-sandbox"],
+    headless: true,
+    args: ["--no-sandbox"],
   }); // Launch the browser
   const page = await browser.newPage(); // Create a new page
 
