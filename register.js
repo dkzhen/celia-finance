@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 });
 async function loginToCelia() {
   const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox"],
+    headless: false,
+    // args: ["--no-sandbox"],
   }); // Launch the browser
   const page = await browser.newPage(); // Create a new page
 
@@ -34,6 +34,7 @@ async function loginToCelia() {
   await page.click("button#requestSubmit");
   await page.waitForTimeout(5000);
   await page.waitForNavigation();
+  console.log("open celia finance....");
   await page.waitForSelector('input[name="email"]');
 
   // Fill in the registration form
@@ -44,6 +45,7 @@ async function loginToCelia() {
   await page.click('button[name="register-authenticate"]');
 
   // Wait for the registration process to complete
+  console.log("register success....");
   await page.waitForNavigation();
 
   await page.waitForSelector('input[name="fullname"]');
@@ -277,6 +279,7 @@ async function loginToCelia() {
   // Click the submit button
   await page.click('button[name="verifysignup"]');
 
+  console.log("verification success....");
   // Wait for the verification process to complete
   await page.waitForNavigation();
   await page.waitForSelector('input[name="email"]');
@@ -287,6 +290,7 @@ async function loginToCelia() {
 
   // Click the login button
   await page.click('button[type="submit"]');
+  console.log("login success....");
 
   // Wait for the login process to complete
   await page.waitForNavigation();
