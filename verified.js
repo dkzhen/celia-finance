@@ -12,44 +12,27 @@ async function loginToCelia() {
 
   const browser = await puppeteer.launch({
     headless: false,
-    // args: ["--no-sandbox"],
-  }); // Launch the browser
-  const page = await browser.newPage(); // Create a new page
+    args: ["--no-sandbox"],
+  });
 
+  const page = await browser.newPage();
   let email = null;
   let verificationCode = null;
 
-  // Prompt for the email
   while (!email) {
     email = await askQuestion("Enter your email:");
-
-    // Wait for a short duration to allow time for input
     await page.waitForTimeout(1000);
   }
 
-  // Navigate to the Celia Finance registration page
-  await page.goto("https://www.croxyproxy.com/");
-
-  await page.waitForSelector('input[name="url"]');
-  await page.type(
-    'input[name="url"]',
-    "https://celia.finance/register?referral_code=WT1N48CLT"
-  );
-  await page.click("button#requestSubmit");
-  await page.waitForTimeout(5000);
-  await page.waitForNavigation();
-  console.log("open celia finance....");
+  await page.goto("https://celia.finance/login");
   await page.waitForSelector('input[name="email"]');
 
-  // Fill in the registration form
   await page.type('input[name="email"]', email);
-  await page.type('input[name="password"]', process.env.PASSWORD); // Replace with your password
+  await page.type('input[name="current-password"]', process.env.PASSWORD);
 
-  // Click the registration button
-  await page.click('button[name="register-authenticate"]');
+  await page.click('button[type="submit"]');
+  console.log("Login success / not verified...");
 
-  // Wait for the registration process to complete
-  console.log("register success....");
   await page.waitForNavigation();
 
   await page.waitForSelector('input[name="fullname"]');
@@ -284,7 +267,7 @@ async function loginToCelia() {
   await page.click('button[name="verifysignup"]');
   await page.waitForNavigation();
 
-  console.log("account create success....");
+  console.log("verification success....");
   // Wait for the verification process to complete
 
   // Close the browser
